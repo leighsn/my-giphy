@@ -1,0 +1,27 @@
+body {
+  /*background-color: black;*/
+  font-family: sans-serif;
+  padding-bottom: 200 px;
+}
+
+input {
+   line-height: 2.5em;
+ }
+
+#root {
+  padding: 50px;
+}
+
+.searchbar {
+  margin-bottom: 50px;
+}
+
+.gif {
+  min-width: 240px;
+  max-height: 240px;
+  display: inline-block;
+}
+
+img {
+  overflow-y: hidden;
+}
