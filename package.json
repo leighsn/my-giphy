@@ -49,6 +49,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "axios": "^0.15.2",
     "minimatch": "^3.0.2",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
