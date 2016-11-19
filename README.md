@@ -45,7 +45,11 @@ To add styling:
 Now, let's add our SearchBar to our app.js:
 
 ```javaScript
-
+render (){
+  <div>
+    <SearchBar />
+  </div>
+}
 ```
 Next, we'll give our SearchBar component **state** and handle some user interactions.
 
@@ -195,7 +199,7 @@ const promiseMiddleware = (store) => {
         return next(action)
       }
       return action.payload.then((resp)=>{
-        store.dispatch(Object.assign({}, action, {payload: resp.data}))
+        store.dispatch(Object.assign({}, action, {payload: resp}))
       })
     }
   }
@@ -223,21 +227,12 @@ export default Store
 
 ```
 
-Next, we need to modify our SearchBar so that when the form is submitted, we dispatch the search action. We need to do this by making our store available to this component. We can do this by passing it down as props.
+Next, we need to modify our SearchBar so that when the form is submitted, we dispatch the search action. We need to do this by making our store available to this component. We can do this by passing it down as props to our SearchBar:
 
-```javascript
-import Store from './store'
-
-ReactDOM.render(
-    <App store={Store} />,
-  document.getElementById('root')
-);
-```
-
-Then we can pass it down to the SearchBar:
 
 ```javascript
 //app.js
+import Store from './store'
 
 render() {
   return (
@@ -435,19 +430,17 @@ Let's set up our app so that when a user first visits the homepage, it will fetc
 
 To do this, we'll use one of React's lifecycle methods, componentDidMount, and write an action to fetch trending gifs when the `<App />` mounts for the first time.
 
-
-Because we're basically at the top of our application, we'll just pass the store down as props:
+First, let's write our action:
 
 ```JavaScript
-//index.js
-
-ReactDOM.render(
-  <Provider store={Store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
-
+export function fetchTrendingGifs(){
+  let url = `http://api.giphy.com/v1/gifs/trending?api_key=${giphyKey}`
+  let gifs = axios.get(url)
+  return {
+    type: "FETCH_TRENDING_GIFS",
+    payload: gifs
+  }
+}
 ```
 
 ```JavaScript
@@ -475,4 +468,19 @@ class App extends Component {
 export default connect(null, {fetchTrendingGifs})(App)
 ```
 
+Let's update our reducer to respond to this new action type:
+
+```javascript
+//gifs-reducer.js
+export default (state = [], action) => {
+  switch (action.type){
+    case "SEARCH":
+      return [].concat(adapter(action.payload.data.data))
+      case "FETCH_TRENDING_GIFS":
+        return [].concat(adapter(action.payload.data.data))
+    default:
+      return state
+  }
+}
+```
 That's it! You have a React-Redux giphy clone!
