@@ -177,11 +177,10 @@ export default Store
 
 ```
 
-Now we need to make one change to our store - adding middleware. Because our action relies on an async call, we need to prevent it from being dispatched until the payload Promise is resolved.
+Now we need to make one change to our store - adding middleware. Because our action relies on an async call, we need to prevent it from being dispatched until the payload Promise is resolved. We'll use the redux-promise library to modify how our store dispatches our actions. Redux promise will check is our action payload is a promise and won't dispatch it to our reducers until the promise is resolved and our action has the data.
 
-We'll write some custom middleware that's just a set of curried functions that will check if the payload is a promise, and not pass it in to the dispatcher unless it's not a promise.
+If we wanted to write our own custom middleware, it would look like this, but we'll skip this because we're using the library. 
 
-We'll make a new file called middleware and add the following code:
 
 ```javascript
 //promise-middleware.js
@@ -198,12 +197,12 @@ const promiseMiddleware = (store) => {
   }
 }
 
-// promiseMiddleware(store)(next)(action)
+// promiseMiddleware(store)(next)(action) -> how the middleware gets called
 
 export default promiseMiddleware
 
 ```
-Next, we'll add this middleware to our application so that each action will flow through the middleware before being dispatched to our reducers. We'll use Redux's `applyMiddleware` function to change how we're creating our Store:
+Next, we'll import redux-promise to our application so that each action will flow through the middleware before being dispatched to our reducers. We'll use Redux's `applyMiddleware` function to change how we're creating our Store:
 
 
 ```javaScript
@@ -471,3 +470,5 @@ class App extends Component {
 
 export default connect(null, {fetchTrendingGifs})(App)
 ```
+
+That's it! You have a React-Redux giphy clone!
