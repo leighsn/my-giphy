@@ -42,7 +42,11 @@ To add styling:
     </button>
   </form>
 ```
+Now, let's add our SearchBar to our app.js:
 
+```javaScript
+
+```
 Next, we'll give our SearchBar component **state** and handle some user interactions.
 
 Add constructor to our class so we can initialize it with a state object:
@@ -179,7 +183,7 @@ export default Store
 
 Now we need to make one change to our store - adding middleware. Because our action relies on an async call, we need to prevent it from being dispatched until the payload Promise is resolved. We'll use the redux-promise library to modify how our store dispatches our actions. Redux promise will check is our action payload is a promise and won't dispatch it to our reducers until the promise is resolved and our action has the data.
 
-If we wanted to write our own custom middleware, it would look like this, but we'll skip this because we're using the library. 
+If we wanted to write our own custom middleware, it would look like this, but we'll skip this because we're using the library.
 
 
 ```javascript
@@ -300,7 +304,7 @@ Next, we'll fill in our reducer function so that once it receives the data from 
 export default (state = [], action) => {
   switch (action.type){
     case "SEARCH":
-      return [].concat(adapter(action.payload.data))
+      return [].concat(adapter(action.payload.data.data))
     default:
       return state
   }
