@@ -1,26 +1,26 @@
 import React, { Component } from 'react'
 
 class Gif extends Component {
+
   constructor(props){
     super(props)
-    this.handleMouseEnter = this.handleMouseEnter.bind(this)
-    this.handleMouseLeave = this.handleMouseLeave.bind(this)
-    this.state = {image: props.still}
+    this.state = { image: props.still }
   }
+
   render(){
     return (
-      <div className="gif">
-        <img onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} src={this.state.image} />
-      </div>
+      <span className="gif__container">
+        <img className="gif" alt={this.props.title} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} src={this.state.image} />
+      </span>
     )
   }
 
-  handleMouseEnter(e){
-    this.setState({image: this.props.animated})
+  handleMouseEnter = (e) => {
+    this.setState({ image: this.props.animated })
   }
 
-  handleMouseLeave(){
-    this.setState({image: this.props.still})
+  handleMouseLeave = () => {
+    this.setState({ image: this.props.still })
   }
 }
 

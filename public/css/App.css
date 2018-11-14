@@ -16,12 +16,18 @@ input {
   margin-bottom: 50px;
 }
 
-.gif {
-  min-width: 240px;
-  max-height: 240px;
-  display: inline-block;
+.gifs {
+  line-height: 0;
+  -webkit-column-count: 5;
+  -webkit-column-gap: 10px;
+  -moz-column-count: 5;
+  -moz-column-gap: 10px;
+  column-count: 5;
+  column-gap: 10px;  
 }
 
-img {
-  overflow-y: hidden;
+.gif {
+  width: 100% !important;
+  height: auto !important;
+  margin: 10px auto;
 }

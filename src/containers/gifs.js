@@ -1,27 +1,22 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import Gif from '../components/gif'
 
-class Gifs extends Component {
-  constructor(){
-    super()
-    this.renderGifs = this.renderGifs.bind(this)
-  }
+class Gifs extends PureComponent {
 
   render(){
+    const { gifs = [] } = this.props
+
     return (
-      <div>
-      {this.renderGifs()}
-      </div>
+      <section className='gifs'>
+      {
+        gifs.length && gifs.map((gif)=>{
+          return <Gif key={gif.id} still={gif.still} animated={gif.animated} />
+        })
+      }
+      </section>
     )
   }
-
-  renderGifs(){
-    return this.props.gifs.map((gif)=>{
-      return <Gif key={gif.id} still={gif.still} animated={gif.animated} />
-    })
-  }
-
 }
 
 function mapStateToProps(state){
@@ -29,4 +24,5 @@ function mapStateToProps(state){
     gifs: state
   }
 }
+
 export default connect(mapStateToProps)(Gifs)
